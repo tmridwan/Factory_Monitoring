@@ -10,7 +10,7 @@ app = insightface.app.FaceAnalysis(name='buffalo_l')
 app.prepare(ctx_id=0, det_size=(640, 640))
 
 # Load enrolled faces
-with open('face-attendance-poc/known_embeddings.pkl', 'rb') as f:
+with open('known_embeddings.pkl', 'rb') as f:
     known_embeddings = pickle.load(f)
 
 known_names = list(known_embeddings.keys())
