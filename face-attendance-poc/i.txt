@@ -1,0 +1,5 @@
+OpenCV python- draw boxes and text on the screen 
+
+instightFace - Turn the face into a unique fingerprint 
+
+onnxruntime - 
