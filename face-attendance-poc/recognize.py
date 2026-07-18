@@ -7,7 +7,7 @@ import time
 
 # Load the model
 app = insightface.app.FaceAnalysis(name='buffalo_l')
-app.prepare(ctx_id=0, det_size=(640, 640))
+app.prepare(ctx_id=0, det_size=(320, 320))
 
 # Load enrolled faces
 with open('known_embeddings.pkl', 'rb') as f:
@@ -41,9 +41,11 @@ def recognize_face(embedding):
 
 # Open webcam
 cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 # Process every Nth frame to save compute (not every single frame needs full detection)
-FRAME_SKIP = 3
+FRAME_SKIP = 5
 frame_count = 0
 
 while True:
@@ -55,7 +57,9 @@ while True:
     frame_count += 1
 
     if frame_count % FRAME_SKIP == 0:
+        t0 = time.time()
         faces = app.get(frame)
+        print(f"Detection took {time.time() - t0:.3f}s, found {len(faces)} faces")
 
         for face in faces:
             bbox = face.bbox.astype(int)
